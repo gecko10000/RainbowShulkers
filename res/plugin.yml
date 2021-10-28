@@ -1,6 +1,6 @@
 name: RainbowShulkers
 main: io.github.gecko10000.RainbowShulkers.RainbowShulkers
-version: 0.1
+version: 1.0
 api-version: 1.13
 commands:
   rainbowshulkers:
