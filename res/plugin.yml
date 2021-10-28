@@ -1,0 +1,7 @@
+name: RainbowShulkers
+main: io.github.gecko10000.RainbowShulkers.RainbowShulkers
+version: 0.1
+api-version: 1.13
+commands:
+  rainbowshulkers:
+    permission: rainbowshulkers.admin

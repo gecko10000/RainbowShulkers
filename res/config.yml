@@ -1,0 +1,4 @@
+chance:
+  natural: 0.1
+  other: 0.005
+tickInterval: 10
