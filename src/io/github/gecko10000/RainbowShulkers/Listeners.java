@@ -13,6 +13,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkPopulateEvent;
 import org.bukkit.event.world.EntitiesLoadEvent;
+import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -50,6 +51,14 @@ public class Listeners implements Listener {
                 .map(Shulker.class::cast)
                 .filter(s -> s.getPersistentDataContainer().has(plugin.rainbowKey, PersistentDataType.BYTE))
                 .forEach(s -> plugin.rainbowShulkers.put(s, plugin.randomizeDyes()));
+    }
+
+    @EventHandler
+    public void onUnload(EntitiesUnloadEvent evt) {
+        Arrays.stream(evt.getChunk().getEntities())
+                .filter(Shulker.class::isInstance)
+                .map(Shulker.class::cast)
+                .forEach(plugin.rainbowShulkers::remove);
     }
 
     @EventHandler (ignoreCancelled = true, priority = EventPriority.HIGH)
