@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkPopulateEvent;
 import org.bukkit.event.world.EntitiesLoadEvent;
@@ -72,6 +73,11 @@ public class Listeners implements Listener {
         Entity entity = evt.getEntity();
         entity.getPersistentDataContainer().set(plugin.rainbowKey, PersistentDataType.BYTE, (byte) 1);
         plugin.rainbowShulkers.put((Shulker) entity, plugin.randomizeDyes());
+    }
+
+    @EventHandler
+    public void onDeath(EntityDeathEvent evt) {
+        plugin.rainbowShulkers.remove(evt.getEntity());
     }
 
 }

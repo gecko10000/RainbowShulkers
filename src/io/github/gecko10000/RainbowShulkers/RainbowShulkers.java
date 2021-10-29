@@ -34,6 +34,10 @@ public class RainbowShulkers extends JavaPlugin {
                 });
     }
 
+    public void onDisable() {
+        rainbowTask.cancel();
+    }
+
     public void reload() {
         saveDefaultConfig();
         reloadConfig();
