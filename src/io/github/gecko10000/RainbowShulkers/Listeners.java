@@ -66,7 +66,7 @@ public class Listeners implements Listener {
         if (evt.getEntityType() != EntityType.SHULKER) {
             return;
         }
-        if (plugin.random.nextDouble() >= plugin.getConfig().getDouble("chance.hit")) {
+        if (plugin.random.nextDouble() >= plugin.getConfig().getDouble("chance.other")) {
             return;
         }
         Entity entity = evt.getEntity();
