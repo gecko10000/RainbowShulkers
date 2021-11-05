@@ -11,10 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.event.world.ChunkPopulateEvent;
-import org.bukkit.event.world.EntitiesLoadEvent;
-import org.bukkit.event.world.EntitiesUnloadEvent;
+import org.bukkit.event.world.*;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -40,22 +37,18 @@ public class Listeners implements Listener {
                             shulker.getPersistentDataContainer().set(plugin.rainbowKey, PersistentDataType.BYTE, (byte) 1);
                             plugin.rainbowShulkers.put(shulker, plugin.randomizeDyes());
                         });
-                return;
+            } else {
+                Arrays.stream(evt.getChunk().getEntities())
+                        .filter(Shulker.class::isInstance)
+                        .map(Shulker.class::cast)
+                        .filter(s -> s.getPersistentDataContainer().has(plugin.rainbowKey, PersistentDataType.BYTE))
+                        .forEach(s -> plugin.rainbowShulkers.put(s, plugin.randomizeDyes()));
             }
         });
     }
 
     @EventHandler
-    public void onLoad(EntitiesLoadEvent evt) {
-        Arrays.stream(evt.getChunk().getEntities())
-                .filter(Shulker.class::isInstance)
-                .map(Shulker.class::cast)
-                .filter(s -> s.getPersistentDataContainer().has(plugin.rainbowKey, PersistentDataType.BYTE))
-                .forEach(s -> plugin.rainbowShulkers.put(s, plugin.randomizeDyes()));
-    }
-
-    @EventHandler
-    public void onUnload(EntitiesUnloadEvent evt) {
+    public void onUnload(ChunkUnloadEvent evt) {
         Arrays.stream(evt.getChunk().getEntities())
                 .filter(Shulker.class::isInstance)
                 .map(Shulker.class::cast)
